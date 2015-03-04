@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="cg-sign" debug="0" reloadable="true">
+
+    <Resource
+
+    auth="Container"
+
+    name="jdbc/idylmanager"
+
+    type="javax.sql.DataSource"
+
+    password="123456"
+
+    driverClassName="net.sf.log4jdbc.DriverSpy"
+
+    maxIdle="10"
+
+    maxWait="100000"
+
+    username="root"
+
+    url="jdbc:log4jdbc:mysql://localhost:3306/idyl"
+
+    maxActive="20"/>
+</Context>
+
+        <!--url="jdbc:log4jdbc:oracle:thin:@172.20.66.165:1521:kwdb"
+        url="jdbc:log4jdbc:oracle:thin:@localhost:1521:orcl"-->

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:util="http://www.springframework.org/schema/util"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/util 
+        http://www.springframework.org/schema/util/spring-util-3.1.xsd">
+
+    <!-- 使用util:properties标签把properties文件的内容提供给SpEL -->
+    <util:properties id="applicationProps" location="classpath:application.properties"/>
+
+    <!--
+        配置静态资源，直接映射到对应的文件夹，不被DispatcherServlet处理
+        设置一年的缓存时间以最大化的利用浏览器缓存和减少服务器压力
+    -->
+
+    <mvc:resources mapping="/resources/js/**" location="/WEB-INF/static/js/" />
+    <mvc:resources mapping="/resources/css/**" location="/WEB-INF/static/css/"/>
+    <mvc:resources mapping="/resources/img/**" location="/WEB-INF/static/img/"/>
+
+    <mvc:resources mapping="/resources/bootstrap/**" location="/WEB-INF/static/bootstrap/"/>
+    <mvc:resources mapping="/resources/font-awesome/**" location="/WEB-INF/static/font-awesome/"/>
+    <mvc:resources mapping="/resources/ionicons/**" location="/WEB-INF/static/ionicons/"/>
+    <mvc:resources mapping="/resources/plugins/**" location="/WEB-INF/static/plugins/"/>
+
+    <mvc:view-controller path="/error" view-name="error" />
+    <mvc:view-controller path="/error/403" view-name="error/403" />
+    <mvc:view-controller path="/error/404" view-name="error/404" />
+    <mvc:view-controller path="/error/500" view-name="error/500" />
+
+    <!-- Activates scanning of @Autowired -->
+    <context:annotation-config/>
+
+    <!--<bean id="exceptionResolver" class="com.capinfo.examsystem.web.listener.MyHandlerExceptionResolver"></bean>-->
+
+    <!-- 自动扫描且只扫描@Controller -->
+    <context:component-scan base-package="com.idyl.manager" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!-- Configures the @Controller programming model -->
+    <!-- 支持spring mvc新的注解类型 详细spring3.0手册 15.12.1 mvc:annotation-driven-->
+    <mvc:annotation-driven />
+
+    <mvc:view-controller path="/sjap" view-name="/sjap"/>
+    <!-- View Resolver for JSPs -->
+    <!--  对模型视图名称的解析，即在模型视图名称添加前后缀,在requestmapping输入的地址后自动调用该类进行视图解析-->
+    <bean id="viewResolver"
+          class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/views/" />
+        <property name="suffix" value=".jsp" />
+    </bean>
+
+
+    <!-- 支持 Shiro对Controller的AOP安全控制 begin-->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor">
+        <property name="proxyTargetClass" value="true" />
+    </bean>
+
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
+
+
+
+
+    <!-- 由于取消自动注册，DispatcherServlet会在spring上下文寻找 id 为 handlerExceptionResolver作为异常解析器 -->
+    <bean id="handlerExceptionResolver" class="com.idyl.manager.web.listener.AnnotationHandlerMethodExceptionResolver">
+        <property name="defaultErrorView" value="error/500"/><!-- 错误页面 -->
+        <property name="messageConverters" ref="messageConverters"/> <!--标有@ResponseBody被此messageConverters输出-->
+    </bean>
+
+
+    <!-- 处理器-适配器 -->
+    <bean id="handlerAdapter" class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+        <property name="cacheSeconds" value="0" />
+        <property name="messageConverters" ref="messageConverters" />
+    </bean>
+    <!-- Http messageConverters，用于将对象输出到客户端-->
+    <util:list id="messageConverters">
+        <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+            <property name="supportedMediaTypes">
+                <list>
+                    <value>application/json</value>
+                    <value>application/javascript</value>
+                    <value>text/json</value>
+                    <value>text/javascript</value>
+                </list>
+            </property>
+        </bean>
+    </util:list>
+
+    <bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
+        <property name="config">
+            <bean class="com.google.code.kaptcha.util.Config">
+                <constructor-arg>
+                    <props>
+                        <prop key="kaptcha.border">yes</prop>
+                        <prop key="kaptcha.textproducer.font.color">red</prop>
+                    </props>
+                </constructor-arg>
+            </bean>
+        </property>
+    </bean>
+
+    <!-- AOP式方法级权限检查  -->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor">
+        <property name="proxyTargetClass" value="true" />
+    </bean>
+
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
+</beans>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+		  http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         version="2.5">
+
+
+    <display-name>idylmanager</display-name>
+
+    <!-- Spring ApplicationContext配置文件的路径,可使用通配符,多个路径用,号分隔
+        此参数用于后面的Spring Context Loader -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            classpath*:/applicationContext.xml
+            classpath*:/applicationContext-shiro.xml
+        </param-value>
+    </context-param>
+    <!--如果不定义webAppRootKey参数，那么webAppRootKey就是缺省的"webapp.root"。但最好设置，
+    以免项目之间的名称冲突。
+
+    定义以后，在Web Container启动时将把ROOT的绝对路径写到系统变量里。
+
+    然后log4j的配置文件里就可以用${webName.root }来表示Web目录的绝对路径，把log文件存放于webapp中。
+
+    此参数用于后面的“Log4jConfigListener”-->
+    <context-param>
+        <param-name>webAppRootKey</param-name>
+        <param-value>idylmanager</param-value>
+    </context-param>
+
+    <!--Spring默认刷新Log4j配置文件的间隔,单位为millisecond-->
+    <context-param>
+        <param-name>log4jRefreshInterval</param-name>
+        <param-value>60000</param-value>
+    </context-param>
+
+    <!--由Sprng载入的Log4j配置文件位置-->
+    <context-param>
+        <param-name>log4jConfigLocation</param-name>
+        <param-value>classpath:log4j.properties</param-value>
+    </context-param>
+
+    <!--Spring的ApplicationContext 载入 -->
+    <!--Spring log4j Config loader
+       需要放在ContextLoaderListener之前
+       否则会提示log4j:WARN No appenders could be found for logger (org.springframework.web.context.ContextLoader)
+    -->
+    <listener>
+        <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>com.idyl.manager.web.listener.StartupListener</listener-class>
+    </listener>
+
+
+
+    <!-- Filter 定义  -->
+    <!-- Shiro Security filter-->
+    <filter>
+        <filter-name>shiroFilter</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+        <init-param>
+            <param-name>targetFilterLifecycle</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>shiroFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+
+    <!-- Character Encoding filter -->
+    <filter>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+
+
+    <filter>
+        <filter-name>XssFilter</filter-name>
+        <filter-class>com.idyl.manager.web.listener.XssFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>XssFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+
+
+
+
+
+
+    <!-- Spring MVC Servlet -->
+    <servlet>
+        <servlet-name>dispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>detectAllHandlerExceptionResolvers</param-name><!-- 取消其自动注册的异常解析器 -->
+            <param-value>false</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <!-- session超时定义,单位为分钟 -->
+    <session-config>
+        <session-timeout>20</session-timeout>
+    </session-config>
+
+    <welcome-file-list>
+        <welcome-file>main</welcome-file>
+    </welcome-file-list>
+
+    <!-- 出错页面定义 -->
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/WEB-INF/views/error/500.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/WEB-INF/views/error/500.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/WEB-INF/views/error/404.jsp</location>
+    </error-page>
+</web-app>
