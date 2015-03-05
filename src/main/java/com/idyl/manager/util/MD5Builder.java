@@ -10,45 +10,45 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**  
- * MD5¼ÓÃÜÉú³ÉÕªÒª  
+ * MD5åŠ å¯†ç”Ÿæˆæ‘˜è¦  
  * @author   Bill  
  * @version  1.0.0  
- * @2010-2-24 ÏÂÎç03:04:53  
+ * @2010-2-24 ä¸‹åˆ03:04:53  
  */
 
 
 public class MD5Builder {
     static Logger logger = Logger.getLogger(MD5Builder.class);
   
-    // ÓÃÀ´½«×Ö½Ú×ª»»³É 16 ½øÖÆ±íÊ¾µÄ×Ö·û   
+    // ç”¨æ¥å°†å­—èŠ‚è½¬æ¢æˆ 16 è¿›åˆ¶è¡¨ç¤ºçš„å­—ç¬¦   
     static char hexDigits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8',   
             '9', 'a', 'b', 'c', 'd', 'e', 'f' };   
   
     /** */  
     /**  
-     * ¶ÔÎÄ¼şÈ«ÎÄÉú³ÉMD5ÕªÒª  
-     * @param file   Òª¼ÓÃÜµÄÎÄ¼ş  
-     * @return MD5ÕªÒªÂë  
+     * å¯¹æ–‡ä»¶å…¨æ–‡ç”ŸæˆMD5æ‘˜è¦  
+     * @param file   è¦åŠ å¯†çš„æ–‡ä»¶  
+     * @return MD5æ‘˜è¦ç   
      */  
     public static String getMD5(File file) {   
         FileInputStream fis = null;   
         try {   
             MessageDigest md = MessageDigest.getInstance("MD5");   
   
-            logger.info("MD5ÕªÒª³¤¶È£º" + md.getDigestLength());   
+            logger.info("MD5æ‘˜è¦é•¿åº¦ï¼š" + md.getDigestLength());   
             fis = new FileInputStream(file);   
             byte[] buffer = new byte[2048];   
             int length = -1;   
-            logger.info("¿ªÊ¼Éú³ÉÕªÒª");   
+            logger.info("å¼€å§‹ç”Ÿæˆæ‘˜è¦");   
             long s = System.currentTimeMillis();   
             while ((length = fis.read(buffer)) != -1) {   
                 md.update(buffer, 0, length);   
             }   
-            logger.info("ÕªÒªÉú³É³É¹¦,×ÜÓÃÊ±: " + (System.currentTimeMillis() - s)   
+            logger.info("æ‘˜è¦ç”ŸæˆæˆåŠŸ,æ€»ç”¨æ—¶: " + (System.currentTimeMillis() - s)   
                     + "ms");   
             byte[] b = md.digest();   
             return byteToHexStringSingle(b);//byteToHexString(b);   
-            // 16Î»¼ÓÃÜ   
+            // 16ä½åŠ å¯†   
             // return buf.toString().substring(8, 24);   
         } catch (Exception ex) {   
             logger.error(ex);   
@@ -65,15 +65,15 @@ public class MD5Builder {
   
     /** */  
     /**  
-     * ¶ÔÒ»¶ÎStringÉú³ÉMD5¼ÓÃÜĞÅÏ¢  
-     * @param message Òª¼ÓÃÜµÄString  
-     * @return Éú³ÉµÄMD5ĞÅÏ¢  
+     * å¯¹ä¸€æ®µStringç”ŸæˆMD5åŠ å¯†ä¿¡æ¯  
+     * @param message è¦åŠ å¯†çš„String  
+     * @return ç”Ÿæˆçš„MD5ä¿¡æ¯  
      */  
     public static String getMD5(String message) {   
         try {   
             MessageDigest md = MessageDigest.getInstance("MD5");   
-            //logger.info("MD5ÕªÒª³¤¶È£º" + md.getDigestLength());   
-            //System.out.println("MD5ÕªÒª³¤¶È£º" + md.getDigestLength());
+            //logger.info("MD5æ‘˜è¦é•¿åº¦ï¼š" + md.getDigestLength());   
+            //System.out.println("MD5æ‘˜è¦é•¿åº¦ï¼š" + md.getDigestLength());
             byte[] b = md.digest(message.getBytes("utf-8"));   
             return byteToHexStringSingle(b);//byteToHexString(b);   
         } catch (NoSuchAlgorithmException e) {   
@@ -89,31 +89,31 @@ public class MD5Builder {
     @Deprecated  
     /** */  
     /**  
-     * °Ñbyte[]Êı×é×ª»»³ÉÊ®Áù½øÖÆ×Ö·û´®±íÊ¾ĞÎÊ½  
-     * @param tmp    Òª×ª»»µÄbyte[]  
-     * @return Ê®Áù½øÖÆ×Ö·û´®±íÊ¾ĞÎÊ½  
+     * æŠŠbyte[]æ•°ç»„è½¬æ¢æˆåå…­è¿›åˆ¶å­—ç¬¦ä¸²è¡¨ç¤ºå½¢å¼  
+     * @param tmp    è¦è½¬æ¢çš„byte[]  
+     * @return åå…­è¿›åˆ¶å­—ç¬¦ä¸²è¡¨ç¤ºå½¢å¼  
      */  
     private static String byteToHexString(byte[] tmp) {   
         String s;   
-        // ÓÃ×Ö½Ú±íÊ¾¾ÍÊÇ 16 ¸ö×Ö½Ú   
-        char str[] = new char[16 * 2]; // Ã¿¸ö×Ö½ÚÓÃ 16 ½øÖÆ±íÊ¾µÄ»°£¬Ê¹ÓÃÁ½¸ö×Ö·û£¬   
-        // ËùÒÔ±íÊ¾³É 16 ½øÖÆĞèÒª 32 ¸ö×Ö·û   
-        int k = 0; // ±íÊ¾×ª»»½á¹ûÖĞ¶ÔÓ¦µÄ×Ö·ûÎ»ÖÃ   
-        for (int i = 0; i < 16; i++) { // ´ÓµÚÒ»¸ö×Ö½Ú¿ªÊ¼£¬¶Ô MD5 µÄÃ¿Ò»¸ö×Ö½Ú   
-            // ×ª»»³É 16 ½øÖÆ×Ö·ûµÄ×ª»»   
-            byte byte0 = tmp[i]; // È¡µÚ i ¸ö×Ö½Ú   
-            str[k++] = hexDigits[byte0 >>> 4 & 0xf]; // È¡×Ö½ÚÖĞ¸ß 4 Î»µÄÊı×Ö×ª»»,    
-            // >>> ÎªÂß¼­ÓÒÒÆ£¬½«·ûºÅÎ»Ò»ÆğÓÒÒÆ   
-            str[k++] = hexDigits[byte0 & 0xf]; // È¡×Ö½ÚÖĞµÍ 4 Î»µÄÊı×Ö×ª»»   
+        // ç”¨å­—èŠ‚è¡¨ç¤ºå°±æ˜¯ 16 ä¸ªå­—èŠ‚   
+        char str[] = new char[16 * 2]; // æ¯ä¸ªå­—èŠ‚ç”¨ 16 è¿›åˆ¶è¡¨ç¤ºçš„è¯ï¼Œä½¿ç”¨ä¸¤ä¸ªå­—ç¬¦ï¼Œ   
+        // æ‰€ä»¥è¡¨ç¤ºæˆ 16 è¿›åˆ¶éœ€è¦ 32 ä¸ªå­—ç¬¦   
+        int k = 0; // è¡¨ç¤ºè½¬æ¢ç»“æœä¸­å¯¹åº”çš„å­—ç¬¦ä½ç½®   
+        for (int i = 0; i < 16; i++) { // ä»ç¬¬ä¸€ä¸ªå­—èŠ‚å¼€å§‹ï¼Œå¯¹ MD5 çš„æ¯ä¸€ä¸ªå­—èŠ‚   
+            // è½¬æ¢æˆ 16 è¿›åˆ¶å­—ç¬¦çš„è½¬æ¢   
+            byte byte0 = tmp[i]; // å–ç¬¬ i ä¸ªå­—èŠ‚   
+            str[k++] = hexDigits[byte0 >>> 4 & 0xf]; // å–å­—èŠ‚ä¸­é«˜ 4 ä½çš„æ•°å­—è½¬æ¢,    
+            // >>> ä¸ºé€»è¾‘å³ç§»ï¼Œå°†ç¬¦å·ä½ä¸€èµ·å³ç§»   
+            str[k++] = hexDigits[byte0 & 0xf]; // å–å­—èŠ‚ä¸­ä½ 4 ä½çš„æ•°å­—è½¬æ¢   
         }   
-        s = new String(str); // »»ºóµÄ½á¹û×ª»»Îª×Ö·û´®   
+        s = new String(str); // æ¢åçš„ç»“æœè½¬æ¢ä¸ºå­—ç¬¦ä¸²   
         return s;   
     }   
   
     /**  
-     * ¶ÀÁ¢°Ñbyte[]Êı×é×ª»»³ÉÊ®Áù½øÖÆ×Ö·û´®±íÊ¾ĞÎÊ½  
+     * ç‹¬ç«‹æŠŠbyte[]æ•°ç»„è½¬æ¢æˆåå…­è¿›åˆ¶å­—ç¬¦ä¸²è¡¨ç¤ºå½¢å¼  
      * @author Bill  
-     * @create 2010-2-24 ÏÂÎç03:26:53  
+     * @create 2010-2-24 ä¸‹åˆ03:26:53  
      * @since   
      * @param byteArray  
      * @return  
@@ -134,7 +134,7 @@ public class MD5Builder {
   
     /**  
      * @author Bill  
-     * @create 2010-2-24 ÏÂÎç03:04:53  
+     * @create 2010-2-24 ä¸‹åˆ03:04:53  
      * @since  
      * @param args  
      */  
