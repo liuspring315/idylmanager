@@ -3,7 +3,7 @@
 <title>***后台管理系统</title>
 <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 <!-- Bootstrap 3.3.2 -->
-<link href="${resourceUrl}/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="${resourceUrl}/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
 <!-- Font Awesome Icons -->
 <link href="${resourceUrl}/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 <!-- Ionicons -->
