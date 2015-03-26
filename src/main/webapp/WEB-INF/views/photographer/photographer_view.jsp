@@ -28,7 +28,7 @@
                             <h3 class="box-title">服务提供者账户列表</h3>
                         </div><!-- /.box-header -->
                         <div class="box-body">
-                            <table id="example2" class="table table-bordered table-hover">
+                            <table id="photographerTable" class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
                                     <th width="10px"><input type="checkbox"/> </th>
@@ -45,101 +45,22 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                <c:forEach items="${photographerList}" var ="photographer" varStatus="status">
                                 <tr>
                                     <td><input type="checkbox"/> </td>
-                                    <td>1</td>
-                                    <td>摄影师</td>
-                                    <td>mayun</td>
-                                    <td>马云</td>
-                                    <td>男</td>
-                                    <td>13333334444</td>
-                                    <td>2015-02-02 11:11</td>
-                                    <td>2015-02-02 11:11</td>
-                                    <td>正常</td>
-                                    <td><button type="button" class="btn btn-primary"  onclick="javascript:showPhotographerModal(1)">查看</button></td>
+                                    <td>${status.count}</td>
+                                    <td>${photographer.userTypeName}</td>
+                                    <td>${photographer.userName}</td>
+                                    <td>${photographer.userName}</td>
+                                    <td>${photographer.userName}</td>
+                                    <td>${photographer.userName}</td>
+                                    <td>${photographer.userName}</td>
+                                    <td>${photographer.userName}</td>
+                                    <td>${photographer.userName}</td>
+                                    <td><button type="button" class="btn btn-primary"  onclick="javascript:showPhotographerModal(${photographer.userName})">查看</button></td>
                                 </tr>
-                                <tr>
-                                    <td><input type="checkbox"/> </td>
-                                    <td>1</td>
-                                    <td>摄影师</td>
-                                    <td>mayun</td>
-                                    <td>马云</td>
-                                    <td>男</td>
-                                    <td>13333334444</td>
-                                    <td>2015-02-02 11:11</td>
-                                    <td>2015-02-02 11:11</td>
-                                    <td>正常</td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-info">操作</button>
-                                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                                                <span class="caret"></span>
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                            </button>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li><a href="#">查看</a></li>
-                                                <li class="divider"></li>
-                                                <li><a href="#">账户锁定</a></li>
-                                                <li class="divider"></li>
-                                                <li><a href="#">保证金变更记录</a></li>
-                                                <li><a href="#">账户锁定记录</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox"/> </td>
-                                    <td>1</td>
-                                    <td>摄影师</td>
-                                    <td>mayun</td>
-                                    <td>马云</td>
-                                    <td>男</td>
-                                    <td>13333334444</td>
-                                    <td>2015-02-02 11:11</td>
-                                    <td>2015-02-02 11:11</td>
-                                    <td>正常</td>
-                                    <td>
-                                       <div class="btn-group">
-                                            <button type="button" class="btn btn-info">操作</button>
-                                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                                                <span class="caret"></span>
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                            </button>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li><a href="#">查看</a></li>
-                                                <li class="divider"></li>
-                                                <li><a href="#">批准入住</a></li>
-                                                <li><a href="#">否决入住</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox"/> </td>
-                                    <td>1</td>
-                                    <td>摄影师</td>
-                                    <td>mayun</td>
-                                    <td>马云</td>
-                                    <td>男</td>
-                                    <td>13333334444</td>
-                                    <td>2015-02-02 11:11</td>
-                                    <td>2015-02-02 11:11</td>
-                                    <td>正常</td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-info">操作</button>
-                                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                                                <span class="caret"></span>
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                            </button>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li><a href="#">查看</a></li>
-                                                <li class="divider"></li>
-                                                <li><a href="#">撤销否决</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
+                                </c:forEach>
+
                                 </tbody>
                             </table>
                         </div><!-- /.box-body -->
@@ -160,7 +81,7 @@
 <!-- page script -->
 <script type="text/javascript">
     $(function () {
-        $('#example2').dataTable({
+        $('#photographerTable').dataTable({
             "bPaginate": true,
             "bLengthChange": false,
             "bFilter": false,

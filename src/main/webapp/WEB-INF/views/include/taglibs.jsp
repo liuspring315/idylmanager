@@ -8,9 +8,3 @@
 <spring:eval expression="@applicationProps['application.version']" var="applicationVersion"/>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <c:set var="resourceUrl" value="${ctx}/resources"/>
-<spring:eval expression="@applicationProps['runqianReportUrl']" var="runqianReportUrl"/>
-<c:set var="runqianReportUrlShowkcks_zcwy" value="${runqianReportUrl}/showkcks_zcwy.jsp"/>
-<c:set var="runqianReportUrlShowReport" value="${runqianReportUrl}/showReport0.jsp"/>
-<spring:eval expression="@applicationProps['webroot']" var="webroot"/>
-<spring:eval expression="@applicationProps['jftype']" var="jftype"/>
-<spring:eval expression="@applicationProps['property_ksmc']" var="property_ksmc"/>
