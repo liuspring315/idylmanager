@@ -1,5 +1,6 @@
 package com.idyl.manager.service.account;
 
+import com.idyl.manager.data.Admin;
 import com.idyl.manager.service.account.AccountService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -41,7 +42,7 @@ public class ShiroDbRealmService extends AuthorizingRealm {
             throw new AccountException("用户名不能为空");
         }
 
-        Map<String,Object> user = accountService.findUserByLoginName(username,password);
+        Admin user = accountService.findUserByLoginName(username,password);
         if (user == null) {
             throw new UnknownAccountException("用户不存在");
         }

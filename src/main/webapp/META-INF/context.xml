@@ -19,7 +19,7 @@
 
     username="root"
 
-    url="jdbc:log4jdbc:mysql://localhost:3306/idyl"
+    url="jdbc:log4jdbc:mysql://localhost:3306/idyl?useUnicode=true&amp;characterEncoding=utf-8"
 
     maxActive="20"/>
 </Context>

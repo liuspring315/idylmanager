@@ -19,6 +19,6 @@ public class PhotographerService {
 	private PhotographerDao photographerDao;
 
 	public List<PhotographerExtra> findList(int page,int pagesize){
-		return photographerDao.getPage(page,pagesize);
+		return photographerDao.findList(page,pagesize);
 	}
 }

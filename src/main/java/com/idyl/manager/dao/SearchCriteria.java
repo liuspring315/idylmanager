@@ -1,6 +1,7 @@
 package com.idyl.manager.dao;
 
-import com.idyl.site.dao.model.Criteria;
+
+import com.idyl.manager.dao.model.Criteria;
 
 import java.util.ArrayList;
 import java.util.Arrays;

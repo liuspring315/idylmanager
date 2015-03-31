@@ -22,6 +22,7 @@ public class PhotographerExtra extends UserGeneralInfo implements java.io.Serial
 	private Double deposit;
 	private String remark;
 	private Integer registerCheckState;
+	private String registerCheckStateName;
 
 	// Constructors
 
@@ -142,4 +143,12 @@ public class PhotographerExtra extends UserGeneralInfo implements java.io.Serial
 		this.registerCheckState = registerCheckState;
 	}
 
+	@Column(name = "register_check_state_name")
+	public String getRegisterCheckStateName() {
+		return registerCheckStateName;
+	}
+
+	public void setRegisterCheckStateName(String registerCheckStateName) {
+		this.registerCheckStateName = registerCheckStateName;
+	}
 }

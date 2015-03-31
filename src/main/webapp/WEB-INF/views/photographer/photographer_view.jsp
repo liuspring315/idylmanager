@@ -51,13 +51,16 @@
                                     <td>${status.count}</td>
                                     <td>${photographer.userTypeName}</td>
                                     <td>${photographer.userName}</td>
-                                    <td>${photographer.userName}</td>
-                                    <td>${photographer.userName}</td>
-                                    <td>${photographer.userName}</td>
-                                    <td>${photographer.userName}</td>
-                                    <td>${photographer.userName}</td>
-                                    <td>${photographer.userName}</td>
-                                    <td><button type="button" class="btn btn-primary"  onclick="javascript:showPhotographerModal(${photographer.userName})">查看</button></td>
+                                    <td>${photographer.familyName}${photographer.lastName}</td>
+                                    <td>${photographer.genderName}</td>
+                                    <td>${photographer.mobile}</td>
+                                    <td>${photographer.addTime}</td>
+                                    <td>${photographer.beginTime}</td>
+                                    <td>${photographer.registerCheckStateName}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary"
+                                                onclick="javascript:showPhotographerModal(${photographer.id})">查看</button>
+                                    </td>
                                 </tr>
                                 </c:forEach>
 

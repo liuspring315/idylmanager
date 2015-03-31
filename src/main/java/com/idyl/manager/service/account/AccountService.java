@@ -1,6 +1,7 @@
 package com.idyl.manager.service.account;
 
 import com.idyl.manager.dao.account.UserDao;
+import com.idyl.manager.data.Admin;
 import com.idyl.manager.util.MD5Builder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,7 +26,7 @@ public class  AccountService {
 
 
 
-    public Map<String,Object> findUserByLoginName(String loginName,String password) {
+    public Admin findUserByLoginName(String loginName,String password) {
         return userDao.findByLoginName(loginName, MD5Builder.getMD5(password));
     }
 

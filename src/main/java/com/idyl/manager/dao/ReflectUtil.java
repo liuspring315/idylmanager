@@ -65,7 +65,7 @@ public class ReflectUtil {
 
 	public  static String getTable(Class<?> clazz){
 		Table t =clazz.getAnnotation(Table.class);
-		return t.name().toUpperCase();
+		return t.name().toLowerCase();
 	}
 
 

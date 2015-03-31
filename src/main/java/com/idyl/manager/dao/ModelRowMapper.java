@@ -1,6 +1,6 @@
 package com.idyl.manager.dao;
 
-import com.idyl.site.dao.interceptor.UpdateFactory;
+import com.idyl.manager.dao.interceptor.UpdateFactory;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.beans.IntrospectionException;

@@ -9,11 +9,15 @@
 
 package com.idyl.manager.dao.account;
 
+import com.idyl.manager.dao.BaseDaoImpl;
 import com.idyl.manager.dao.BaseSpringJdbcDaoImpl;
+import com.idyl.manager.data.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import javax.sql.DataSource;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +29,7 @@ import java.util.Map;
  * @version 0.1
  */
 @Component
-public class UserDao extends BaseSpringJdbcDaoImpl {
+public class UserDao extends BaseDaoImpl<Admin> {
     public static String ID = "ID";
     public static String EMAIL = "EMAIL";
     public static String LOGIN_NAME = "ID";
@@ -33,12 +37,15 @@ public class UserDao extends BaseSpringJdbcDaoImpl {
     public static String PASSWORD = "PASSWORD";
     private static String USER_BY_LOGINNAME = "select id,user_name,nick_name,password,user_stat,remark,begin_date from admin where user_name = ? and password = ?";
 
+
     @Autowired
-    private void setJdbcTemplate(JdbcTemplate jdbcTemplate){
-        super.jdbcTemplate = jdbcTemplate;
+    public void setDataSource(DataSource dataSource) {
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
+        this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
-    public Map<String,Object> findByLoginName(String loginName,String password){
-        List<Map<String,Object>> list = jdbcTemplate.queryForList(USER_BY_LOGINNAME, new Object[]{loginName,password});
+
+    public Admin findByLoginName(String loginName,String password){
+        List<Admin> list = executeRawSql(USER_BY_LOGINNAME, new Object[]{loginName,password});
         if(list != null && list.size() > 0){
             return list.get(0);
         }

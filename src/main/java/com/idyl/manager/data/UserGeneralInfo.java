@@ -16,6 +16,7 @@ public class UserGeneralInfo implements java.io.Serializable {
 
 	private Integer id;
 	private Integer userType;
+	private String userTypeName;
 	private String userName;
 	private String email;
 	private String password;
@@ -28,7 +29,8 @@ public class UserGeneralInfo implements java.io.Serializable {
 	private String headThumb;
 	private Timestamp addTime;
 	private Timestamp beginTime;
-
+	private int gender;
+	private String genderName;
 	// Constructors
 
 	/** default constructor */
@@ -189,4 +191,30 @@ public class UserGeneralInfo implements java.io.Serializable {
 		this.beginTime = beginTime;
 	}
 
+	@Column(name = "userTypeName")
+	public String getUserTypeName() {
+		return userTypeName;
+	}
+
+	public void setUserTypeName(String userTypeName) {
+		this.userTypeName = userTypeName;
+	}
+
+	@Column(name = "gender")
+	public int getGender() {
+		return gender;
+	}
+
+	public void setGender(int gender) {
+		this.gender = gender;
+	}
+
+	@Column(name = "genderName")
+	public String getGenderName() {
+		return genderName;
+	}
+
+	public void setGenderName(String genderName) {
+		this.genderName = genderName;
+	}
 }

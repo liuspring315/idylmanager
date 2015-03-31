@@ -18,7 +18,7 @@ public class UpdateInterceptor implements MethodInterceptor {
 		String methodName = method.getName();
 		String attribute=methodName.substring(3).toLowerCase();
 		int hash=object.hashCode();
-		System.out.println(object.hashCode()+" intercep");
+//		System.out.println(object.hashCode()+" intercep");
 		UpdateFactory.addChange(hash, attribute, args[0]);
 		return methodProxy.invokeSuper(object, args);
 	}

@@ -231,7 +231,7 @@ public class BaseDaoImpl<T> {
 		if(page<0||pagesize<0){
 			throw new IllegalArgumentException("页码或页大小参数不合法");
 		}
-		String sql="select * from "+s+" limit "+page*pagesize+","+(page+1)*pagesize;
+		String sql="select * from ("+s+") t limit "+page*pagesize+","+(page+1)*pagesize;
 		return jdbcTemplate.query(sql, new ModelRowMapper<T>(entityType));
 	}
 	/**

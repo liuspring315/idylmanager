@@ -17,22 +17,23 @@ import java.util.List;
 public class PhotographerDao extends BaseDaoImpl<PhotographerExtra> {
 
 	final String LIST_SQL = "SELECT USER_TYPE ,"+
-			"  (case USER_TYPE when 1 then '会员'  when 2 then '摄影师' when 3 then '造型师' else '摄影机构管理员' end) USER_TYPE_NAME,"+
-			"  USER_NAME , EMAIL email, PASSWORD password, FAMILY_NAME, LAST_NAME ,"+
-			" MOBILE mobile, TELEPHONE telephone, LOCATION location, BIRTHDAY birthday, HEAD_THUMB , "+
-			"ADD_TIME , BEGIN_TIME ,ID id,"+
-			"user_general_info_id ,"+
-			"introduction,"+
-			"authentication,"+
-			"certificate_type ,"+
-			"certificate_num ,"+
-			"idcard_front ,"+
-			"idcard_back ,"+
-			"deposit,"+
-			"remark,"+
-			"register_check_state "+
-			" FROM user_general_info g, photographer_extra c "+
-			"WHERE g.id = c.user_general_info_id order by g.id";
+			"  (CASE  WHEN USER_TYPE=1 THEN '会员'  WHEN USER_TYPE=2 THEN '摄影师' WHEN USER_TYPE=3 THEN '造型师' ELSE '摄影机构管理员' END) USERTYPENAME,"+
+			"  USER_NAME , EMAIL EMAIL, PASSWORD PASSWORD, FAMILY_NAME, LAST_NAME ,"+
+			" MOBILE MOBILE, TELEPHONE TELEPHONE, LOCATION LOCATION, BIRTHDAY BIRTHDAY, HEAD_THUMB , "+
+			"ADD_TIME , BEGIN_TIME ,ID ID,"+
+			"USER_GENERAL_INFO_ID ,"+
+			"INTRODUCTION,"+
+			"AUTHENTICATION,"+
+			"CERTIFICATE_TYPE ,"+
+			"CERTIFICATE_NUM ,"+
+			"IDCARD_FRONT ,"+
+			"IDCARD_BACK ,"+
+			"DEPOSIT,"+
+			"REMARK,"+
+			"REGISTER_CHECK_STATE,GENDER,(CASE WHEN GENDER = 0 THEN '男' ELSE '女' END) GENDERNAME, "+
+			"(CASE WHEN REGISTER_CHECK_STATE = 1 THEN '待审核' WHEN REGISTER_CHECK_STATE = 2 THEN '审核通过' ELSE '审核不通过' END) REGISTER_CHECK_STATE_NAME"+
+			" FROM user_general_info G, photographer_extra C "+
+			"WHERE G.ID = C.USER_GENERAL_INFO_ID ORDER BY G.ID";
 	@Autowired
 	public void setDataSource(DataSource dataSource) {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
