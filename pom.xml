@@ -35,7 +35,7 @@
                 <artifactId>tomcat-maven-plugin</artifactId>
                 <version>1.1</version>
                 <configuration>
-                    <port>8080</port>
+                    <port>8081</port>
                     <path>/idylmanager</path>
                     <warSourceDirectory>${basedir}/src/main/webapp</warSourceDirectory>
                     <uriEncoding>GBK</uriEncoding>

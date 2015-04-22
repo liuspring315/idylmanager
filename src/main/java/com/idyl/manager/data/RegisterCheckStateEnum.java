@@ -6,7 +6,8 @@ package com.idyl.manager.data;
 public enum RegisterCheckStateEnum {
 	WAIT_APPROVE("未审核",1),
 	APPROVE_YES("批准入驻",2),
-	APPROVE_NO("否决入驻",3)
+	APPROVE_NO("否决入驻",3),
+	LOCK("锁定",4)
 	;
 	//资源编码
 	private Integer code;

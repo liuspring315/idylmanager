@@ -21,4 +21,9 @@ public class PhotographerService {
 	public List<PhotographerExtra> findList(int page,int pagesize){
 		return photographerDao.findList(page,pagesize);
 	}
+
+	@Transactional(readOnly = false)
+	public int upRegisterCheckState(int userType,int personId,int state){
+		return photographerDao.upRegisterCheckState(userType,personId,state);
+	}
 }

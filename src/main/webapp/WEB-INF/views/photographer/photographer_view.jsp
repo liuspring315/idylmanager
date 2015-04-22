@@ -90,17 +90,17 @@
                                                 <li><a href="#" onclick="javascript:showPhotographerModal(${photographer.id})">查看</a></li>
                                                 <li class="divider"></li>
                                                 <c:if test="${photographer.registerCheckState==1}">
-                                                <li><a href="#" onclick="javascript:showConfirmModalModal(${photographer.id},'确认批准入住？')">批准入住</a></li>
-                                                <li><a href="#"  onclick="javascript:showConfirmModalModal(${photographer.id},'确认否决入住？')">否决入住</a></li>
+                                                <li><a href="#" onclick="javascript:showConfirmModalModal('pass',${photographer.userType},${photographer.id},'确认批准入住？')">批准入住</a></li>
+                                                <li><a href="#"  onclick="javascript:showConfirmModalModal('over',${photographer.userType},${photographer.id},'确认否决入住？')">否决入住</a></li>
                                                 </c:if>
                                                 <c:if test="${photographer.registerCheckState==2}">
-                                                    <li><a href="#" onclick="javascript:showConfirmModalModal(${photographer.id},'确认账户锁定？')">账户锁定</a></li>
+                                                    <li><a href="#" onclick="javascript:showConfirmModalModal('lock',${photographer.userType},${photographer.id},'确认账户锁定？')">账户锁定</a></li>
                                                     <li class="divider"></li>
                                                     <li><a href="#">保证金变更记录</a></li>
                                                     <li><a href="#">账户锁定记录</a></li>
                                                 </c:if>
                                                 <c:if test="${photographer.registerCheckState==3}">
-                                                    <li><a href="#" onclick="javascript:showConfirmModalModal(${photographer.id},'确认撤销否决？')">撤销否决</a></li>
+                                                    <li><a href="#" onclick="javascript:showConfirmModalModal('rev',${photographer.userType},${photographer.id},'确认撤销否决？')">撤销否决</a></li>
                                                 </c:if>
                                             </ul>
                                         </div>
@@ -131,15 +131,31 @@
         $("#photographerModalBtn").attr("vid",id);
         $('#photographerModal').modal('show');
     }
-    function showConfirmModalModal(id,mess){
+    function showConfirmModalModal(action,userType,id,mess){
         $("#confirmModalMess").html(mess);
         $("#confirmModalBtn").attr("vid",id);
+        $("#confirmModalBtn").attr("vaction",action);
+        $("#confirmModalBtn").attr("vusertype",userType);
         $('#confirmModal').modal('show');
     }
     function confirmModalClick(){
-        alert($("#photographerModalBtn").attr("vid"));
+        $("#personId").val($("#confirmModalBtn").attr("vid"));
+        $("#userType").val($("#confirmModalBtn").attr("vusertype"));
+        $("#showConfirmModalForm").attr("action","${ctx}/photographer/"+$("#confirmModalBtn").attr("vaction"));
+        $("#showConfirmModalForm").submit();
+
     }
+    $(document).ready(function() {
+        <c:if test="${not empty message}">
+        $("#alertModalMess").html("${message}");
+        $('#alertModal').modal('show');
+        </c:if>
+    });
 </script>
+<form action="" method="post" id="showConfirmModalForm">
+    <input type="hidden" id="personId" name="personId"/>
+    <input type="hidden" id="userType" name="userType"/>
+</form>
 <!-- 对话框 -->
 <div class="modal fade" id="photographerModal" tabindex="-1" role="dialog" aria-labelledby="photographerModalLabel"
      aria-hidden="true">
@@ -239,6 +255,23 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                 <button type="button" class="btn btn-primary" id="confirmModalBtn" onclick="javascript:confirmModalClick()">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">提示</h4>
+            </div>
+            <div class="modal-body" id="alertModalMess">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">确定</button>
             </div>
         </div>
     </div>
