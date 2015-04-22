@@ -93,7 +93,9 @@ public class ModelRowMapper<T> implements RowMapper {
 						Column column = (Column) an;
 						Object value = rs.getObject(column.name().toUpperCase());
 						Method wm = pd.getWriteMethod();
-						wm.invoke(entity,value);
+//						System.out.println(entity+":"+value);
+						wm.invoke(entity, value);
+
 						break;
 					}
 				}

@@ -29,7 +29,7 @@ public class UserGeneralInfo implements java.io.Serializable {
 	private String headThumb;
 	private Timestamp addTime;
 	private Timestamp beginTime;
-	private int gender;
+	private Integer gender;
 	private String genderName;
 	// Constructors
 
@@ -201,11 +201,11 @@ public class UserGeneralInfo implements java.io.Serializable {
 	}
 
 	@Column(name = "gender")
-	public int getGender() {
+	public Integer getGender() {
 		return gender;
 	}
 
-	public void setGender(int gender) {
+	public void setGender(Integer gender) {
 		this.gender = gender;
 	}
 
