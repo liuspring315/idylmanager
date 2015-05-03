@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context path="cg-sign" debug="0" reloadable="true">
+<Context path="idylmanager" debug="0" reloadable="true">
 
     <Resource
 
-    auth="Container"
+            auth="Container"
 
-    name="jdbc/idylmanager"
+            name="jdbc/idylmanager"
 
-    type="javax.sql.DataSource"
+            type="javax.sql.DataSource"
 
-    password="123456"
+            password="hdm125077408"
 
-    driverClassName="net.sf.log4jdbc.DriverSpy"
+            driverClassName="net.sf.log4jdbc.DriverSpy"
 
-    maxIdle="10"
+            maxIdle="10"
 
-    maxWait="100000"
+            maxWait="100000"
 
-    username="root"
+            username="hdm125077408"
 
-    url="jdbc:log4jdbc:mysql://localhost:3306/idyl?useUnicode=true&amp;characterEncoding=utf-8"
+            url="jdbc:log4jdbc:mysql://hdm125077408.my3w.com:3306/hdm125077408_db"
 
-    maxActive="20"/>
+            maxActive="20"/>
 </Context>
 
         <!--url="jdbc:log4jdbc:oracle:thin:@172.20.66.165:1521:kwdb"
