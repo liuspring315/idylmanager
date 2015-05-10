@@ -77,32 +77,39 @@ public class PagerTag extends TagSupport {
 			page = 1;
 		if (page > totalPage)
 			page = totalPage;
-		
-		 StringBuilder sb = new StringBuilder();
+
+		StringBuilder sb = new StringBuilder();
 		sb.append("<div class=\"dataTables_info\" id=\"DataTables_Table_0_info\" role=\"status\" aria-live=\"polite\">");
-		sb.append("Showing ").append(page).append(" to ").append((page-1)*pageSize).append(" of ").append(page*pageSize).append(" entries");
+		sb.append("第 ").append(page).append(" 页|每页 ").append(pageSize).append(" 条记录|共 ").append(totalNum).append(" 条记录");
 		sb.append("</div> ");
 		sb.append("<div class=\"dataTables_paginate paging_simple_numbers\" id=\"DataTables_Table_0_paginate\">");
 		sb.append("<ul class=\"pagination\">");
-		sb.append("<li class=\"paginate_button previous disabled\" aria-controls=\"DataTables_Table_0\" tabindex=\"0\" id=\"DataTables_Table_0_previous\"><a href=\"javascript:goPage(").append(page - 1).append(")\">Previous</a></li>");
-		sb.append("<li class=\"paginate_button active\" aria-controls=\"DataTables_Table_0\" tabindex=\"0\"><a href=\"javascript:goPage(1)\">1</a></li>");
-		sb.append("<li class=\"paginate_button \" aria-controls=\"DataTables_Table_0\" tabindex=\"0\"><a href=\"javascript:goPage(2)\">2</a></li>");
-		sb.append("<li class=\"paginate_button \" aria-controls=\"DataTables_Table_0\" tabindex=\"0\"><a href=\"javascript:goPage(2)\">3</a></li>");
-		sb.append("<li class=\"paginate_button \" aria-controls=\"DataTables_Table_0\" tabindex=\"0\"><a href=\"javascript:goPage(2)\">4</a></li>");
-		sb.append("<li class=\"paginate_button \" aria-controls=\"DataTables_Table_0\" tabindex=\"0\"><a href=\"javascript:goPage(2)\">5</a></li>");
-		sb.append("<li class=\"paginate_button \" aria-controls=\"DataTables_Table_0\" tabindex=\"0\"><a href=\"javascript:goPage(2)\">6</a></li>");
-		sb.append("<li class=\"paginate_button next\" aria-controls=\"DataTables_Table_0\" tabindex=\"0\" id=\"DataTables_Table_0_next\"><a href=\"javascript:goPage(").append(page + 1).append(")\">Next</a></li>");
+		if(page <= 1) {
+			sb.append("<li class=\"paginate_button previous disabled\" aria-controls=\"DataTables_Table_0\" tabindex=\"0\" id=\"DataTables_Table_0_previous\">" +
+					"<a href=\"javascript:goPage(").append(page - 1).append(")\">上一页</a></li>");
+		}
+		int j = this.totalPage > 10?10:this.totalPage;
+		for(int i = 0;i < j;i++){
+			sb.append("<li class=\"paginate_button ").append(page == (i+1)?"active":"").append("\" aria-controls=\"DataTables_Table_0\" tabindex=\"0\"><a href=\"javascript:goPage(").append(i+1).append(")\">").append(i + 1).append("</a></li>");
+		}
+		if(page > 10){
+			j = this.totalPage > 10?10:this.totalPage;
+		}
+		if(page < totalPage){
+			sb.append("<li class=\"paginate_button next\" aria-controls=\"DataTables_Table_0\" tabindex=\"0\" id=\"DataTables_Table_0_next\">" +
+					"<a href=\"javascript:goPage(").append(page + 1).append(")\">下一页</a></li>");
+		}
 		sb.append("</ul>");
 		sb.append("</div> ");
 		sb.append("<script type=\"text/javascript\">function goPage(p){");
-				sb.append("		$(\"#").append(form).append("\").append('<input type=\"hidden\" id=\"page\" name=\"page\" value=\"'+p+'\"/>');");
+		sb.append("		$(\"#").append(form).append("\").append('<input type=\"hidden\" id=\"page\" name=\"page\" value=\"'+p+'\"/>');");
 		sb.append("$(\"#").append(form).append("\"+form).submit();");
-				sb.append("}</script>");
-		 try { 
-	            pageContext.getOut().println(sb.toString()); 
-	        } catch (IOException e) { 
-	            e.printStackTrace(); 
-	        }
+		sb.append("}</script>");
+		try {
+			pageContext.getOut().println(sb.toString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return super.doStartTag();
 	}
 	
