@@ -3,6 +3,7 @@ package com.idyl.manager.dao.account;
 import com.idyl.manager.dao.BaseDaoImpl;
 import com.idyl.manager.data.PhotographerExtra;
 import com.idyl.manager.data.UserTypeEnum;
+import com.idyl.manager.util.pager.Pager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -79,9 +80,11 @@ public class PhotographerDao extends BaseDaoImpl<PhotographerExtra> {
 	}
 
 
-	public List<PhotographerExtra> findList(int page,int pagesize)
+	public Pager findList(Pager pager)
 	{
-		return super.getPage(LIST_SQL,page,pagesize);
+		pager.setResults(super.getPage(LIST_SQL, pager.getPage(), pager.getPageSize()));
+		pager.setTotalNum(super.getTotalCount(LIST_SQL));
+		return pager;
 	}
 
 	public int upRegisterCheckState(int userType,int personId,int state)

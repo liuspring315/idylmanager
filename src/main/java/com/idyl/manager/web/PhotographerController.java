@@ -4,6 +4,8 @@ import com.idyl.manager.data.PhotographerExtra;
 import com.idyl.manager.data.RegisterCheckStateEnum;
 import com.idyl.manager.data.UserTypeEnum;
 import com.idyl.manager.service.account.PhotographerService;
+import com.idyl.manager.util.pager.Pager;
+import com.idyl.manager.util.pager.Pager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,9 +25,9 @@ public class PhotographerController extends BaseController {
 	private PhotographerService photographerService;
 
     @RequestMapping("/photographer_view")
-    public String index(Model model){
-        List<PhotographerExtra> list = photographerService.findList(0, 100);
-	    model.addAttribute("photographerList", list);
+    public String index(Model model,Pager pager){
+        photographerService.findList(pager);
+	    model.addAttribute("pager", pager);
         return "photographer/photographer_view";
     }
 

@@ -2,6 +2,7 @@ package com.idyl.manager.service.account;
 
 import com.idyl.manager.dao.account.PhotographerDao;
 import com.idyl.manager.data.PhotographerExtra;
+import com.idyl.manager.util.pager.Pager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,8 +19,8 @@ public class PhotographerService {
 	@Autowired
 	private PhotographerDao photographerDao;
 
-	public List<PhotographerExtra> findList(int page,int pagesize){
-		return photographerDao.findList(page,pagesize);
+	public Pager findList(Pager pager){
+		return photographerDao.findList(pager);
 	}
 
 	@Transactional(readOnly = false)

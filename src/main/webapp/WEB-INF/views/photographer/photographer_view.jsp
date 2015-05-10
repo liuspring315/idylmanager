@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="/mypageTag" prefix="p" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,6 +31,7 @@
                         <div class="box box-danger">
                             <div class="box-body">
                                 <div class="row">
+                                    <form action="" method="post" name="searchForm" id="searchForm">
                                     <div class="col-xs-3">
                                         <input type="text" class="form-control" placeholder="用户名或姓名"  name="userName">
                                     </div>
@@ -41,11 +43,12 @@
                                     </select>
                                     </div>
                                     <div class="col-xs-3">
-                                        <button type="submit" class="btn btn-primary">搜索</button>
+                                        <button type="submit" id="searchButton" class="btn btn-primary">搜索</button>
                                     </div>
                                     <div class="col-xs-3">
-                                        <button type="submit" class="btn btn-primary">批量否决</button>
+                                        <button type="button" class="btn btn-primary">批量否决</button>
                                     </div>
+                                    </form>
                                 </div>
                             </div><!-- /.box-body -->
                         </div><!-- /.box -->
@@ -67,7 +70,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach items="${photographerList}" var ="photographer" varStatus="status">
+                                <c:forEach items="${pager.results}" var ="photographer" varStatus="status">
                                 <tr>
                                     <td><input type="checkbox"/> </td>
                                     <td>${status.count}</td>
@@ -109,7 +112,10 @@
                                 </c:forEach>
 
                                 </tbody>
+
                             </table>
+                            <!-- 分页 -->
+                            <p:pager page="${pager.page}" pageSize="${pager.pageSize}" totalNum="${pager.totalNum}" form="searchForm" />
                         </div><!-- /.box-body -->
                     </div><!-- /.box -->
 
@@ -150,7 +156,9 @@
         $("#alertModalMess").html("${message}");
         $('#alertModal').modal('show');
         </c:if>
+
     });
+
 </script>
 <form action="" method="post" id="showConfirmModalForm">
     <input type="hidden" id="personId" name="personId"/>

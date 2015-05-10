@@ -185,7 +185,7 @@ public class BaseDaoImpl<T> {
 		int id=insert(entity);
 		//直接通过connection进行提交同样无法成功
 //      transaction.commit();
-		logger.info("数据库返回的自增ID为："+id);
+		logger.info("数据库返回的自增ID为：" + id);
 		T persisted=load(id);
 		return persisted;
 	}
@@ -201,7 +201,7 @@ public class BaseDaoImpl<T> {
 		sb.append(where);
 		logger.info("查询语句"+sb.toString());
 		logger.info("查询参数"+Arrays.toString(sc.generateParams()));
-		List<T> list = jdbcTemplate.query(sb.toString(), setParams(sc.generateParams()),new ModelRowMapper(entityType));
+		List<T> list = jdbcTemplate.query(sb.toString(), setParams(sc.generateParams()), new ModelRowMapper(entityType));
 		return list;
 	}
 	/**
@@ -210,6 +210,14 @@ public class BaseDaoImpl<T> {
 	 */
 	public int getTotalCount(){
 		String sql="select count(*) from "+table;
+		return jdbcTemplate.queryForInt(sql);
+	}
+	/**
+	 * 返回DAO对应的数据库表的总记录数
+	 * @return
+	 */
+	public int getTotalCount(String tableSql){
+		String sql="select count(*) from ("+tableSql+") t";
 		return jdbcTemplate.queryForInt(sql);
 	}
 	/**
@@ -231,7 +239,7 @@ public class BaseDaoImpl<T> {
 		if(page<0||pagesize<0){
 			throw new IllegalArgumentException("页码或页大小参数不合法");
 		}
-		String sql="select * from ("+s+") t limit "+page*pagesize+","+(page+1)*pagesize;
+		String sql="select * from ("+s+") t limit "+(page-1)*pagesize+","+(page)*pagesize;
 		return jdbcTemplate.query(sql, new ModelRowMapper<T>(entityType));
 	}
 	/**
